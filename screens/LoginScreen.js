@@ -6,11 +6,11 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    const correctUsername = 'Admin';  // Hardcoded for simplicity
-    const correctPassword = 'admin123';  // Hardcoded for simplicity
+    const correctUsername = 'Admin'; 
+    const correctPassword = 'admin123'; 
 
     if (username === correctUsername && password === correctPassword) {
-      navigation.navigate('Admin');  // Navigate to Admin Screen on successful login
+      navigation.navigate('Admin');
     } else {
       Alert.alert('Error', 'Invalid username or password');
     }
@@ -19,8 +19,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Text style={styles.title}>Admin Login</Text>
-
-      {/* Username Field */}
+ 
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -32,7 +31,6 @@ export default function LoginScreen({ navigation }) {
         placeholderTextColor="#aaa"
       />
 
-      {/* Password Field */}
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -43,12 +41,10 @@ export default function LoginScreen({ navigation }) {
         placeholderTextColor="#aaa"
       />
 
-      {/* Login Button */}
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      {/* Forgot Password Text */}
       <TouchableOpacity onPress={() => Alert.alert('Reset password feature coming soon!')}>
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>

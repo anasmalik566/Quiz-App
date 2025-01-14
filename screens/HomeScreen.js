@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, StatusBar, Image } from 'react-native';
 
-// Component for the Home Screen
+
 export default function HomeScreen({ navigation }) {
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
@@ -10,13 +10,12 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* Attractive Status Bar with theme matching color */}
       <StatusBar barStyle="light-content" backgroundColor="grey" />
       
-      {/* Circular Image with Border */}
+  
       <View style={styles.imageContainer}>
         <Image 
-          source={require('../Images/logo3.png')} // Replace with your image URL or local path
+          source={require('../Images/logo3.png')} 
           style={styles.circleImage} 
         />
       </View>
@@ -27,7 +26,6 @@ export default function HomeScreen({ navigation }) {
         Test your knowledge and compete with others!
       </Text>
 
-      {/* Start Quiz Button */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => handleNavigation('Quiz')}
@@ -35,7 +33,6 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.buttonText}>Start Quiz</Text>
       </TouchableOpacity>
 
-      {/* View Leaderboard Button */}
       <TouchableOpacity
         style={[styles.button, styles.secondaryButton]}
         onPress={() => handleNavigation('Leaderboard')}
@@ -48,43 +45,43 @@ export default function HomeScreen({ navigation }) {
   );
 }
 
-// Stylesheet
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: 'white', // Dark background for modern look
+    backgroundColor: 'white',
   },
   imageContainer: {
     marginBottom: 30,
-    alignItems: 'center', // Ensure the image is centered
+    alignItems: 'center', 
   },
   circleImage: {
-    width: 200, // Adjust the size of the circular image
+    width: 200, 
     height: 200, 
-    borderRadius: 100, // Make the image circular
-    marginBottom: 15, // Space between the image and the title
-    borderWidth: 2, // Border width for the circular image
-    borderColor: '#3498db', // Matching the border color to the button
+    borderRadius: 100, 
+    marginBottom: 15,
+    borderWidth: 2, 
+    borderColor: '#3498db',
     // resizeMode: 'repeat'
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#3498db', // White for contrast on dark background
+    color: '#3498db',
     marginBottom: 10,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
-    color: '#black', // Subdued color for secondary text
+    color: '#black', 
     marginBottom: 40,
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#3498db', // Vibrant primary color
+    backgroundColor: '#3498db', 
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 10,
@@ -95,7 +92,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
-    // elevation: 5, // Shadow for Android
+    // elevation: 5, 
   },
   buttonText: {
     color: '#FFFFFF',
@@ -105,7 +102,7 @@ const styles = StyleSheet.create({
   secondaryButton: {
     backgroundColor: 'transparent',
     borderWidth: 2,
-    borderColor: '#3498db', // Matching the border color to the button
+    borderColor: '#3498db',
   },
   secondaryButtonText: {
     color: '#3498db',

@@ -18,7 +18,7 @@ export default function TimerScreen({ route, navigation }) {
           'Time is up!',
           `Your score: ${score}`,
           [
-            { text: 'OK', onPress: () => navigation.navigate('Leaderboard', { score }) }, // Pass score to leaderboard
+            { text: 'OK', onPress: () => navigation.navigate('Leaderboard', { score }) }, 
           ]
         );
       });

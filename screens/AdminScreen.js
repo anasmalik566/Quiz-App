@@ -25,7 +25,7 @@ export default function AdminScreen() {
   }, []);
 
   const addQuestion = async () => {
-    // Ensure the question, choices, and answer are valid before adding
+
     if (newQuestion.trim() && newChoices.every(choice => choice.trim()) && newAnswer.trim()) {
       const newQuestionObj = {
         question: newQuestion,
@@ -40,7 +40,7 @@ export default function AdminScreen() {
       try {
         await AsyncStorage.setItem('questions', JSON.stringify(updatedQuestions));
         setNewQuestion('');
-        setNewChoices(['', '', '']); // Reset choices
+        setNewChoices(['', '', '']); 
         setNewAnswer('');
         Alert.alert('Success', 'Question added!');
       } catch (error) {
@@ -90,7 +90,6 @@ export default function AdminScreen() {
 
       <Text style={styles.listTitle}>Questions:</Text>
 
-      {/* ScrollView for Questions - Take half of the screen */}
       <View style={styles.scrollWrapper}>
         <ScrollView style={styles.scrollContainer}>
           {questions.map((q, index) => (
@@ -108,7 +107,8 @@ export default function AdminScreen() {
   );
 }
 
-const { height } = Dimensions.get('window'); // Get screen height
+const { height,width } = Dimensions.get('window'); 
+// console.log("height", height, "width" ,width)
 
 const styles = StyleSheet.create({
   container: { 

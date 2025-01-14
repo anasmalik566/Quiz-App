@@ -43,9 +43,8 @@ export default function QuizScreen({ navigation }) {
     setIsAnswered(true);
 
     const isCorrect = choice === questions[current].answer;
-
     if (isCorrect) {
-      setScore((prevScore) => prevScore + 1); // Increment score for correct answers
+      setScore((prevScore) => prevScore + 1); 
       setAnswerStatus('correct');
     } else if (choice !== null) {
       setAnswerStatus('wrong');
@@ -68,7 +67,7 @@ export default function QuizScreen({ navigation }) {
         setTimer(10);
         setIsAnswered(false); // Reset for the next question
       } else {
-        // Navigate to result screen with final score
+        
         navigation.replace('Timer', { score: score + (isCorrect ? 1 : 0), total: questions.length });
       }
 

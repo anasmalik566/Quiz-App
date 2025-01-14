@@ -38,14 +38,14 @@ const styles = StyleSheet.create({
   container: { 
     flex: 1, 
     padding: 20, 
-    backgroundColor: '#ECF0F1', // Light background for modern feel
+    backgroundColor: '#ECF0F1', 
   },
   title: { 
     fontSize: 28, 
     fontWeight: 'bold', 
     textAlign: 'center', 
     marginBottom: 20, 
-    color: '#2C3E50', // Dark title color for better contrast
+    color: '#3498db', 
   },
   entry: { 
     flexDirection: 'row', 
@@ -55,24 +55,24 @@ const styles = StyleSheet.create({
     paddingVertical: 12, 
     paddingHorizontal: 20, 
     backgroundColor: '#FFFFFF', 
-    borderRadius: 8, 
+    borderRadius: 50, 
     shadowColor: '#000', 
     shadowOffset: { width: 0, height: 2 }, 
-    shadowOpacity: 0.1, 
+    // shadowOpacity: 0.1, 
     shadowRadius: 5, 
-    elevation: 5, // Android shadow
+    elevation: 5, 
   },
   currentUserEntry: {
-    backgroundColor: '#FFEB3B', // Yellow background for the current user
+    backgroundColor: '#FFEB3B', 
     borderWidth: 2,
-    borderColor: '#F39C12', // Border color matching the current user highlight
+    borderColor: '#F39C12', 
   },
   entryText: { 
     fontSize: 18, 
-    color: '#2C3E50', // Dark text for readability
+    color: '#2C3E50', 
   },
   currentUserText: {
     fontWeight: 'bold',
-    color: '#E74C3C', // Highlight the current user's name and score with a red color
+    color: '#E74C3C', 
   },
 });
