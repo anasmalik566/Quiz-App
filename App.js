@@ -27,7 +27,7 @@ function MainTabs() {
   }
 
   return (
-    <Tab.Navigator screenOptions ={{headerShown: false}}>
+    <Tab.Navigator initialRouteName = "Home" screenOptions ={{headerShown: false}}>
       <Tab.Screen name="Home" component={HomeScreen} 
       options={{
         tabBarLabel: 'Home',

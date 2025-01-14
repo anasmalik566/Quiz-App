@@ -59,9 +59,9 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
   },
   circleImage: {
-    width: 200, 
-    height: 200, 
-    borderRadius: 100, 
+    width: 160, 
+    height: 160, 
+    borderRadius: 80, 
     marginBottom: 15,
     borderWidth: 2, 
     borderColor: '#3498db',

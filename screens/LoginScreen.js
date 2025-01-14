@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Image, Platform } from 'react-native';
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
@@ -18,6 +18,14 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+
+       <View style={styles.imageContainer}>
+              <Image 
+                source={require('../Images/admin.png')} 
+                style={styles.circleImage} 
+              />
+            </View>
+
       <Text style={styles.title}>Admin Login</Text>
  
       <TextInput
@@ -59,11 +67,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     padding: 20,
+    marginTop: -99
+  },
+  imageContainer: {
+    marginBottom: 15,
+    alignItems: 'center', 
+  },
+  circleImage: {
+    width: 95, 
+    height: 95, 
+    borderRadius: 50, 
+    marginBottom: 15,
+    borderWidth: 2, 
+    borderColor: '#3498db',
+    // resizeMode: 'repeat'
   },
   title: {
-    fontSize: 30,
-    fontWeight: '600',
-    marginBottom: 30,
+    fontSize: 27,
+    fontWeight: 'bold',
+    marginBottom: 20,
     color: '#3498db',
   },
   input: {
