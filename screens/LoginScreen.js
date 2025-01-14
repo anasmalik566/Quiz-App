@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Image, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image} from 'react-native';
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
@@ -9,7 +9,13 @@ export default function LoginScreen({ navigation }) {
     const correctUsername = 'Admin'; 
     const correctPassword = 'admin123'; 
 
-    if (username === correctUsername && password === correctPassword) {
+    if (username === '' && password === '') {
+      Alert.alert('Error', 'Enter your username and password');
+    } else if (username === '') {
+      Alert.alert('Error', 'Enter your username');
+    } else if (password === '') {
+      Alert.alert('Error', 'Enter your password');
+    } else if (username === correctUsername && password === correctPassword) {
       navigation.navigate('Admin');
     } else {
       Alert.alert('Error', 'Invalid username or password');
@@ -17,7 +23,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <View style={styles.container}>
 
        <View style={styles.imageContainer}>
               <Image 
@@ -56,7 +62,7 @@ export default function LoginScreen({ navigation }) {
       <TouchableOpacity onPress={() => Alert.alert('Reset password feature coming soon!')}>
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 

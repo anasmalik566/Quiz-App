@@ -1,31 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LeaderboardScreen({ route }) {
-  const [leaderboard, setLeaderboard] = useState([
-    { name: 'Alice', score: 10 },
-    { name: 'Bob', score: 8 },
-    { name: 'Charlie', score: 6 },
-  ]);
-  
-  // Update leaderboard with current score
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  const defaultLeaderboard = [
+    { name: 'Shahid Khan', score: 10 },
+    { name: 'Ahmad Raza', score: 8 },
+    { name: 'Waqar Ali', score: 6 },
+    { name: 'Atif Khan', score: 9 },
+    { name: 'Sahil Shah', score: 3 },
+    { name: 'Hassan Qureshi', score: 11 },
+  ];
+
+  // Fetch leaderboard from AsyncStorage when the component mounts
   useEffect(() => {
-    if (route.params && route.params.score) {
-      const newLeaderboard = [...leaderboard, { name: 'You', score: route.params.score }];
-      newLeaderboard.sort((a, b) => b.score - a.score); // Sort by score
-      setLeaderboard(newLeaderboard);
-    }
+    const fetchLeaderboard = async () => {
+      try {
+        const storedLeaderboard = await AsyncStorage.getItem('leaderboard');
+        if (storedLeaderboard) {
+          setLeaderboard(JSON.parse(storedLeaderboard));
+        } else {
+          // If no data is found, initialize with default values
+          setLeaderboard(defaultLeaderboard);
+          await AsyncStorage.setItem('leaderboard', JSON.stringify(defaultLeaderboard));
+        }
+      } catch (error) {
+        console.error('Error fetching leaderboard:', error);
+      }
+    };
+
+    fetchLeaderboard();
+  }, []);
+
+  // Update leaderboard with the new score and save it to AsyncStorage
+  useEffect(() => {
+    const updateLeaderboard = async () => {
+      if (route.params && route.params.score) {
+        // Merge default leaderboard with new entry to ensure defaults are preserved
+        const newLeaderboard = [...defaultLeaderboard, ...leaderboard, { name: 'You', score: route.params.score }];
+        const uniqueLeaderboard = Array.from(
+          new Map(newLeaderboard.map((entry) => [entry.name, entry])).values()
+        ); // Remove duplicates based on name
+        uniqueLeaderboard.sort((a, b) => b.score - a.score); // Sort by score
+
+        setLeaderboard(uniqueLeaderboard);
+
+        try {
+          await AsyncStorage.setItem('leaderboard', JSON.stringify(uniqueLeaderboard));
+        } catch (error) {
+          console.error('Error saving leaderboard:', error);
+        }
+      }
+    };
+
+    updateLeaderboard();
   }, [route.params]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Leaderboard</Text>
       {leaderboard.map((entry, index) => (
-        <View key={index} style={[styles.entry, entry.name === 'You' && styles.currentUserEntry]}>
-          <Text style={[styles.entryText, entry.name === 'You' && styles.currentUserText]}>
+        <View
+          key={index}
+          style={[
+            styles.entry,
+            entry.name === 'You' && styles.currentUserEntry,
+          ]}
+        >
+          <Text
+            style={[
+              styles.entryText,
+              entry.name === 'You' && styles.currentUserText,
+            ]}
+          >
             {index + 1}. {entry.name}
           </Text>
-          <Text style={[styles.entryText, entry.name === 'You' && styles.currentUserText]}>
+          <Text
+            style={[
+              styles.entryText,
+              entry.name === 'You' && styles.currentUserText,
+            ]}
+          >
             {entry.score}
           </Text>
         </View>
@@ -58,7 +115,6 @@ const styles = StyleSheet.create({
     borderRadius: 50, 
     shadowColor: '#000', 
     shadowOffset: { width: 0, height: 2 }, 
-    // shadowOpacity: 0.1, 
     shadowRadius: 5, 
     elevation: 5, 
   },
