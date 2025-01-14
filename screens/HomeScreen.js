@@ -6,11 +6,12 @@ export default function HomeScreen({ navigation }) {
   const handleNavigation = (screen) => {
     navigation.navigate(screen);
   };
+  
 
   return (
     <View style={styles.container}>
       {/* Attractive Status Bar with theme matching color */}
-      <StatusBar barStyle="dark-content" backgroundColor="white" />
+      <StatusBar barStyle="light-content" backgroundColor="grey" />
       
       {/* Circular Image with Border */}
       <View style={styles.imageContainer}>
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: 'black', // Dark background for modern look
+    backgroundColor: 'white', // Dark background for modern look
   },
   imageContainer: {
     marginBottom: 30,
@@ -72,13 +73,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#FFFFFF', // White for contrast on dark background
+    color: '#3498db', // White for contrast on dark background
     marginBottom: 10,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
-    color: '#BBBBBB', // Subdued color for secondary text
+    color: '#black', // Subdued color for secondary text
     marginBottom: 40,
     textAlign: 'center',
   },
@@ -107,6 +108,6 @@ const styles = StyleSheet.create({
     borderColor: '#3498db', // Matching the border color to the button
   },
   secondaryButtonText: {
-    color: '#FFFFFF',
+    color: '#3498db',
   },
 });

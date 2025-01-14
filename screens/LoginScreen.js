@@ -61,14 +61,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     padding: 20,
   },
   title: {
     fontSize: 30,
     fontWeight: '600',
     marginBottom: 30,
-    color: 'white',
+    color: '#3498db',
   },
   input: {
     width: '85%',

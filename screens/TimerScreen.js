@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, Animated } from 'react-native';
 
 export default function TimerScreen({ route, navigation }) {
   const { score } = route.params;
-  const [timeLeft, setTimeLeft] = useState(3);
+  const [timeLeft, setTimeLeft] = useState(4);
   const [fadeAnim] = useState(new Animated.Value(1));
 
   useEffect(() => {

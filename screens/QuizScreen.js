@@ -9,6 +9,14 @@ const questions = [
   { id: 5, question: 'What is the default port for React development server?', choices: ['3000', '8080', '5000'], answer: '3000' },
   { id: 6, question: 'Which of the following is a React lifecycle method?', choices: ['componentDidMount', 'setState', 'render'], answer: 'componentDidMount' },
   { id: 7, question: 'What is Redux used for?', choices: ['State management', 'Routing', 'Animation'], answer: 'State management' },
+  { id: 8, question: 'Which command is used to create a new React Native project?', choices: ['react-native init', 'npx create-react-app', 'npm start'], answer: 'react-native init' },
+  { id: 9, question: 'What is the role of Metro in React Native?', choices: ['Bundler', 'State Manager', 'UI Framework'], answer: 'Bundler' },
+  { id: 10, question: 'Which file is used to configure dependencies in a React Native project?', choices: ['package.json', 'index.js', 'App.js'], answer: 'package.json' },
+  { id: 11, question: 'What is the use of the FlatList component?', choices: ['List rendering', 'Routing', 'Styling'], answer: 'List rendering' },
+  { id: 12, question: 'How do you apply styles in React Native?', choices: ['CSS', 'Stylesheet.create', 'HTML'], answer: 'Stylesheet.create' },
+  { id: 13, question: 'Which of the following components is used for navigation in React Native?', choices: ['Navigator', 'StackNavigator', 'NavigationContainer'], answer: 'NavigationContainer' },
+  { id: 14, question: 'What is the use of the SafeAreaView component?', choices: ['To prevent overlapping with system UI', 'To create a modal', 'To apply global styles'], answer: 'To prevent overlapping with system UI' },
+  { id: 15, question: 'Which command is used to run a React Native app on an Android emulator?', choices: ['npx react-native run-android', 'npm start', 'npx expo start'], answer: 'npx react-native run-android' },
 ];
 
 export default function QuizScreen({ navigation }) {
@@ -16,50 +24,54 @@ export default function QuizScreen({ navigation }) {
   const [score, setScore] = useState(0);
   const [answerStatus, setAnswerStatus] = useState(null);
   const [buttonAnim] = useState(new Animated.Value(1));
-  const [timer, setTimer] = useState(10); // Timer countdown starting at 10 seconds
+  const [timer, setTimer] = useState(10);
+  const [isAnswered, setIsAnswered] = useState(false);
 
   useEffect(() => {
-    if (timer === 0) {
-      handleAnswer(null); // Handle time-out when timer reaches 0
+    if (timer <= 0) {
+      handleAnswer(null); // Trigger time-out handling
     } else {
-      const timerInterval = setInterval(() => {
-        setTimer((prev) => prev - 1); // Decrease timer by 1 every second
+      const interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
       }, 1000);
-      return () => clearInterval(timerInterval); // Clean up the interval
+      return () => clearInterval(interval);
     }
   }, [timer]);
 
   const handleAnswer = (choice) => {
-    if (choice !== null) {
-      const isCorrect = choice === questions[current].answer;
-      if (isCorrect) {
-        setScore(score + 1);
-        setAnswerStatus('correct');
-      } else {
-        setAnswerStatus('wrong');
-      }
+    if (isAnswered) return; // Prevent multiple answers for the same question
+    setIsAnswered(true);
+
+    const isCorrect = choice === questions[current].answer;
+
+    if (isCorrect) {
+      setScore((prevScore) => prevScore + 1); // Increment score for correct answers
+      setAnswerStatus('correct');
+    } else if (choice !== null) {
+      setAnswerStatus('wrong');
     } else {
-      setAnswerStatus('time-out'); // Handle time-out condition
+      setAnswerStatus('time-out');
     }
 
-    // Button feedback animation
+    // Animate button feedback
     Animated.timing(buttonAnim, {
       toValue: 1.2,
       duration: 200,
       useNativeDriver: true,
     }).start();
 
-    // Add a delay before moving to the next question
+    // Delay before moving to the next question or ending quiz
     setTimeout(() => {
       if (current < questions.length - 1) {
-        setCurrent(current + 1);
-        setAnswerStatus(null); // Reset answer status for the next question
-        setTimer(10); // Reset timer for the next question
+        setCurrent((prev) => prev + 1);
+        setAnswerStatus(null);
+        setTimer(10);
+        setIsAnswered(false); // Reset for the next question
       } else {
-        navigation.navigate('Timer', { score });
+        // Navigate to result screen with final score
+        navigation.replace('Timer', { score: score + (isCorrect ? 1 : 0), total: questions.length });
       }
 
-      // Reset the button animation
       Animated.timing(buttonAnim, {
         toValue: 1,
         duration: 200,
@@ -71,13 +83,13 @@ export default function QuizScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.question}>{questions[current].question}</Text>
-      
+
       {answerStatus && (
         <Text style={styles.answerStatus}>
-          {answerStatus === 'correct' ? 'Correct!' : answerStatus === 'wrong' ? 'Wrong!' : 'Time\'s Up!'}
+          {answerStatus === 'correct' ? 'Correct!' : answerStatus === 'wrong' ? 'Wrong!' : "Time's Up!"}
         </Text>
       )}
-      
+
       <Text style={styles.timerText}>Time Left: {timer}s</Text>
 
       {questions[current].choices.map((choice, index) => (
@@ -87,10 +99,10 @@ export default function QuizScreen({ navigation }) {
               styles.choiceButton,
               answerStatus === 'correct' && styles.correctChoice,
               answerStatus === 'wrong' && styles.wrongChoice,
-              answerStatus === 'time-out' && styles.timeOutChoice, // Add style for time-out
+              answerStatus === 'time-out' && styles.timeOutChoice,
             ]}
             onPress={() => handleAnswer(choice)}
-            disabled={answerStatus !== null} // Disable button after answering or time-out
+            disabled={isAnswered} // Disable selection after answering
           >
             <Text style={styles.choiceText}>{choice}</Text>
           </TouchableOpacity>
@@ -119,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#E74C3C', // Red color to highlight the urgency of the timer
+    color: '#E74C3C',
   },
   choiceWrapper: {
     marginVertical: 10,
@@ -146,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e74c3c',
   },
   timeOutChoice: {
-    backgroundColor: '#f39c12', // Yellow for time-out option
+    backgroundColor: '#f39c12',
   },
   answerStatus: {
     fontSize: 20,
